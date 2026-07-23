@@ -10,7 +10,15 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-p${MYSQL_ROOT_PASSWORD}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 30
@@ -45,7 +53,7 @@ services:
         condition: service_completed_successfully
 
   nginx:
-    image: nginx:1.27-alpine
+    image: nginx:1.31-alpine
     restart: unless-stopped
     ports:
       - "127.0.0.1:${APP_PORT:-8080}:80"

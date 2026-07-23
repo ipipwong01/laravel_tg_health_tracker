@@ -1,8 +1,9 @@
-FROM php:8.5-fpm-alpine
+FROM php:8.5-fpm-bookworm
 
-RUN apk add --no-cache $PHPIZE_DEPS linux-headers icu-dev oniguruma-dev \
-    && docker-php-ext-install pdo_mysql mbstring intl opcache \
-    && apk del $PHPIZE_DEPS linux-headers
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libicu-dev libonig-dev \
+    && docker-php-ext-install -j"$(nproc)" pdo_mysql mbstring intl opcache \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 

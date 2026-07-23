@@ -93,6 +93,15 @@ docker compose -f docker-compose.production.yml ps
 docker compose -f docker-compose.production.yml logs -f telegram-worker
 ```
 
+If the first image build fails while installing PHP extensions, make sure the current `Dockerfile` starts with `php:8.5-fpm-bookworm` (not an Alpine PHP image), then rebuild from scratch:
+
+```bash
+docker compose -f docker-compose.production.yml build --no-cache
+docker compose -f docker-compose.production.yml up -d
+```
+
+The Bookworm image installs the PHP compiler prerequisites and builds the MySQL, `mbstring`, `intl`, and OPcache extensions; it is the supported DGX build path.
+
 Generate a key before the first `up` if you have not set one manually:
 
 ```bash

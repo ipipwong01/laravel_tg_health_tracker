@@ -1,8 +1,9 @@
 FROM php:8.5-fpm-bookworm
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libicu-dev libonig-dev \
+    && apt-get install -y --no-install-recommends $PHPIZE_DEPS pkg-config libicu-dev libonig-dev \
     && docker-php-ext-install -j"$(nproc)" pdo_mysql mbstring intl opcache \
+    && apt-get purge -y --auto-remove $PHPIZE_DEPS pkg-config libicu-dev libonig-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer

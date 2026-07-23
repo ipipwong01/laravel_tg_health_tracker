@@ -100,7 +100,7 @@ docker compose -f docker-compose.production.yml build --no-cache --progress=plai
 docker compose -f docker-compose.production.yml up -d
 ```
 
-The Bookworm image installs the PHP compiler prerequisites and builds the MySQL, `mbstring`, and `intl` extensions; it is the supported DGX build path.
+The Bookworm image installs the PHP compiler prerequisites and builds the MySQL, DOM/XML, ZIP, `mbstring`, and `intl` extensions; it is the supported DGX build path.
 
 Generate a key before the first `up` if you have not set one manually:
 

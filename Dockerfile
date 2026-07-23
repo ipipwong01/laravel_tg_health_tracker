@@ -2,11 +2,11 @@ FROM php:8.4-fpm-bookworm
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends $PHPIZE_DEPS pkg-config libicu-dev libonig-dev
+    apt-get install -y --no-install-recommends $PHPIZE_DEPS pkg-config libicu-dev libonig-dev libxml2-dev libzip-dev git unzip
 
 RUN set -eux; \
-    docker-php-ext-install -j1 pdo_mysql mbstring intl; \
-    php -m | grep -E 'intl|mbstring|pdo_mysql'
+    docker-php-ext-install -j1 pdo_mysql mbstring intl dom xml xmlreader xmlwriter zip; \
+    php -m | grep -E 'dom|intl|mbstring|pdo_mysql|xml|zip'
 
 RUN rm -rf /var/lib/apt/lists/*
 
